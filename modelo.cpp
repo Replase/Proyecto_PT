@@ -25,8 +25,22 @@ ModeloOBJ techospasillo2("modelos/Techos/Techos2.obj","texturas/beige_wall_001_d
 ModeloOBJ techosegundopiso("modelos/Techos/Techos3.obj","texturas/beige_wall_001_diff_4k.jpg");
 //segundo piso
 ModeloOBJ segundopiso("modelos/SegPisp/Segundopiso.obj","texturas/beige_wall_001_diff_4k.jpg");
-
-
+//Adorno
+ModeloOBJ adorno("modelos/Pisos/Adorno.obj");
+void aplicar_material_chrome(){
+    //Definición de las componentes ambiental, difusa, especular y brillo.
+    GLfloat comp_amb[] = {0.25f, 0.25f, 0.25f, 1.0f  };
+    GLfloat comp_dif[] = {0.4f, 0.4f, 0.4f, 1.0f };
+    GLfloat comp_esp[] = {0.774597f, 0.774597f, 0.774597f, 1.0f };
+    GLfloat emision[] ={.1,.1,.1,.1};
+    GLfloat shine = 76.8f;
+    //Aplicación de las componentes ambiental, difusa, especular y brillo.
+    glMaterialfv(GL_FRONT, GL_AMBIENT, comp_amb);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, comp_dif);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, comp_esp);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emision);
+    glMaterialfv(GL_FRONT, GL_SHININESS, &shine);
+}
 
 void dibujar_paredes_pasillo1(){
     glPushMatrix();
@@ -96,9 +110,11 @@ void dibujar_techo_segundo_piso(){
         techosegundopiso.dibujar();
     glPopMatrix();
 }
-void dibujar_cubo(){
+void dibujar_adorno(){
     glPushMatrix();
-        glutSolidCube(.2);
-        glTranslatef(0,.5,0);
+        aplicar_material_chrome();
+        glScalef(.2,.2,.2);
+        glRotatef(180,0,1,0);
+        adorno.dibujar();
     glPopMatrix();
 }
