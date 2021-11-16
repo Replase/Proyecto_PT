@@ -6,9 +6,9 @@
 #include "camara.cpp"
 #include "modelo.cpp"
 #define STB_IMAGE_IMPLEMENTATION
-#define VELOCIDAD_MOV .1
-#define VELOCIDAD_MOV2 3
-#define VELOCIDAD_ROT 0.25
+#define VELOCIDAD_MOV .1 //vel de movimiento
+#define VELOCIDAD_MOV2 3 //rotar arriba abajo
+#define VELOCIDAD_ROT 0.25 //rotar derecha izquerda
 
 
 //Variables para interacción con el usuario.
@@ -19,7 +19,7 @@ GLfloat rx = 0;
 GLfloat ry = 0;
 //Creación del objeto de cámara.
 Camara cam (0,.5,2,    //Cámara posicionada en el centro.
-            0,.5,-1,    //Cámara viendo hacia el fondo de la pantalla (+Z)
+            0,.5,-1,    //Cámara viendo hacia el fondo de la pantalla (-Z)
             0, 1, 0);   //Cámara sin rotación (UP = +Y)
 //Rotación de la cámara sobre su eje X local (voltear arriba y abajo.)
 GLfloat rotX = 0.0f;
@@ -52,6 +52,7 @@ void ejes(void){
         glVertex3f(0,0,10);
     glEnd();
 }
+
 void dibujar() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
@@ -70,7 +71,7 @@ void dibujar() {
         dibujar_techos_pasillo2();
         dibujar_segundo_piso();
         dibujar_techo_segundo_piso();
-        dibujar_cubo();
+        dibujar_adorno();
         
     glPopMatrix();
 
@@ -209,7 +210,7 @@ void config_GLUT(void) {
     glutInitDisplayMode (GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
     glutInitWindowPosition(100, 100);
     glutInitWindowSize(800, 600);
-    glutCreateWindow("Textura");
+    glutCreateWindow("Proyecto");
     glutDisplayFunc(dibujar);
     glutKeyboardFunc(teclado);
     glutReshapeFunc(redimensionar);
