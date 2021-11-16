@@ -6,6 +6,9 @@
 #include <vector>
 #define STB_IMAGE_IMPLEMENTATION
 //Se cargan los modelos.
+//muebles  
+ModeloOBJ mesa("modelos2/mesita.obj","texturas/madera.jpg");
+
 //Las texturas deben tener ina resolucion cuadrada mxm
 //Pisos
 //ModeloOBJ pisodepasillo11("modelos/Pisos/Piso11.obj","texturas/wood_table_001_diff_4k.jpg");
@@ -51,6 +54,17 @@ void aplicar_material_chrome(){
     glMaterialfv(GL_FRONT, GL_SPECULAR, comp_esp);
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emision);
     glMaterialfv(GL_FRONT, GL_SHININESS, &shine);
+}
+void dibujar_muebles(){
+    
+        
+    glPushMatrix();
+        glTranslated(0.45,0.12,-1.1);
+        glScalef(.0002,.0004,.0004);
+        
+        //glRotatef(180,0,1,0);
+        mesa.dibujar();
+    glPopMatrix();
 }
 
 void dibujar_paredes_pasillo1(){
