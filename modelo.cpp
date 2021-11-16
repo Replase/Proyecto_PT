@@ -6,8 +6,14 @@
 #include <vector>
 #define STB_IMAGE_IMPLEMENTATION
 //Se cargan los modelos.
+//muebles  
+ModeloOBJ mesa("modelos2/mesita.obj","texturas/madera.jpg");
+
+//Las texturas deben tener ina resolucion cuadrada mxm
 //Pisos
-ModeloOBJ pisodepasillo11("modelos/Pisos/Piso11.obj","texturas/wood_table_001_diff_4k.jpg");
+//ModeloOBJ pisodepasillo11("modelos/Pisos/Piso11.obj","texturas/wood_table_001_diff_4k.jpg");
+ModeloOBJ pisodepasillo11("modelos2/piso1.obj","texturas/piso1.jpg");
+
 ModeloOBJ pisodepasillo12("modelos/Pisos/Piso12.obj","texturas/wood_table_001_diff_4k.jpg");
 ModeloOBJ pisodepasillo21("modelos/Pisos/Piso21.obj","texturas/wood_table_001_diff_4k.jpg");
 ModeloOBJ pisodepasillo22("modelos/Pisos/Piso22.obj","texturas/wood_table_001_diff_4k.jpg");
@@ -15,12 +21,20 @@ ModeloOBJ pisodepasillo23("modelos/Pisos/Piso23.obj","texturas/wood_table_001_di
 ModeloOBJ pisodepasillounion("modelos/Pisos/PisoUnion.obj","texturas/wood_table_001_diff_4k.jpg");
 ModeloOBJ pisodepasillounion2("modelos/Pisos/Pisounion2.obj","texturas/wood_table_001_diff_4k.jpg");
 //Paredes 
-ModeloOBJ paredespasillo1("modelos/Paredes/Paredes1.obj","texturas/beige_wall_001_diff_4k.jpg");
-ModeloOBJ paredespasillo2("modelos/Paredes/Paredes2.obj","texturas/beige_wall_001_diff_4k.jpg");
+//ModeloOBJ paredespasillo1("modelos/Paredes/Paredes1.obj","texturas/beige_wall_001_diff_4k.jpg");
+ModeloOBJ paredespasillo1("modelos2/paredes1.obj","texturas/pared1.jpg");//uwu
+//ModeloOBJ paredespasillo2("modelos/Paredes/Paredes2.obj","texturas/beige_wall_001_diff_4k.jpg");
+ModeloOBJ paredespasillo2("modelos2/paredes2.obj","texturas/pared2.jpg");
+
 //Muros
-ModeloOBJ murospasillo2("modelos/Muros/Muros.obj","texturas/beige_wall_001_diff_4k.jpg");
+//ModeloOBJ murospasillo2("modelos/Muros/Muros.obj","texturas/beige_wall_001_diff_4k.jpg");
+ModeloOBJ murospasillo2("modelos2/muros.obj","texturas/muros1.jpg");
+
 //Techos
-ModeloOBJ techospasillo1("modelos/Techos/Techos1.obj","texturas/beige_wall_001_diff_4k.jpg");
+//ModeloOBJ techospasillo1("modelos/Techos/Techos1.obj","texturas/beige_wall_001_diff_4k.jpg");
+ModeloOBJ techospasillo1("modelos2/techo1.obj","texturas/techo1.jpg");
+
+
 ModeloOBJ techospasillo2("modelos/Techos/Techos2.obj","texturas/beige_wall_001_diff_4k.jpg");
 ModeloOBJ techosegundopiso("modelos/Techos/Techos3.obj","texturas/beige_wall_001_diff_4k.jpg");
 //segundo piso
@@ -40,6 +54,17 @@ void aplicar_material_chrome(){
     glMaterialfv(GL_FRONT, GL_SPECULAR, comp_esp);
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emision);
     glMaterialfv(GL_FRONT, GL_SHININESS, &shine);
+}
+void dibujar_muebles(){
+    
+        
+    glPushMatrix();
+        glTranslated(0.45,0.12,-1.1);
+        glScalef(.0002,.0004,.0004);
+        
+        //glRotatef(180,0,1,0);
+        mesa.dibujar();
+    glPopMatrix();
 }
 
 void dibujar_paredes_pasillo1(){

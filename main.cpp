@@ -72,6 +72,7 @@ void dibujar() {
         dibujar_segundo_piso();
         dibujar_techo_segundo_piso();
         dibujar_adorno();
+        dibujar_muebles();
         
     glPopMatrix();
 
