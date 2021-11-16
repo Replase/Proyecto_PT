@@ -24,9 +24,14 @@ ModeloOBJ paredespasillo1("modelos2/paredes1.obj","texturas/pared1.jpg");//uwu
 ModeloOBJ paredespasillo2("modelos2/paredes2.obj","texturas/pared2.jpg");
 
 //Muros
-ModeloOBJ murospasillo2("modelos/Muros/Muros.obj","texturas/beige_wall_001_diff_4k.jpg");
+//ModeloOBJ murospasillo2("modelos/Muros/Muros.obj","texturas/beige_wall_001_diff_4k.jpg");
+ModeloOBJ murospasillo2("modelos2/muros.obj","texturas/muros1.jpg");
+
 //Techos
-ModeloOBJ techospasillo1("modelos/Techos/Techos1.obj","texturas/beige_wall_001_diff_4k.jpg");
+//ModeloOBJ techospasillo1("modelos/Techos/Techos1.obj","texturas/beige_wall_001_diff_4k.jpg");
+ModeloOBJ techospasillo1("modelos2/techo1.obj","texturas/techo1.jpg");
+
+
 ModeloOBJ techospasillo2("modelos/Techos/Techos2.obj","texturas/beige_wall_001_diff_4k.jpg");
 ModeloOBJ techosegundopiso("modelos/Techos/Techos3.obj","texturas/beige_wall_001_diff_4k.jpg");
 //segundo piso
