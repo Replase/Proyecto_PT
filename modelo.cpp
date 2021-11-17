@@ -9,6 +9,23 @@
 //Las texturas deben tener ina resolucion cuadrada mxm
 //Pisos
 //ModeloOBJ pisodepasillo11("modelos/Pisos/Piso11.obj","texturas/wood_table_001_diff_4k.jpg");
+
+typedef struct Frame{
+    //traslacion
+    float px;
+    float py;
+    float pz;
+    //rotacion
+    float rx;
+    float ry;
+    float rz;
+    //escala
+    float sx;
+    float sy;
+    float sz;
+}frame;
+
+frame f;
 ModeloOBJ pisodepasillo11("modelos2/piso1.obj","texturas/piso1.jpg");
 
 ModeloOBJ pisodepasillo12("modelos/Pisos/Piso12.obj","texturas/wood_table_001_diff_4k.jpg");
@@ -38,6 +55,10 @@ ModeloOBJ techosegundopiso("modelos/Techos/Techos3.obj","texturas/beige_wall_001
 ModeloOBJ segundopiso("modelos/SegPisp/Segundopiso.obj","texturas/beige_wall_001_diff_4k.jpg");
 //Adorno
 ModeloOBJ adorno("modelos/Pisos/Adorno.obj");
+
+//Animacion
+ModeloOBJ among("./modelos/Animaciones/among.obj");
+
 void aplicar_material_chrome(){
     //Definición de las componentes ambiental, difusa, especular y brillo.
     GLfloat comp_amb[] = {0.25f, 0.25f, 0.25f, 1.0f  };
@@ -53,6 +74,17 @@ void aplicar_material_chrome(){
     glMaterialfv(GL_FRONT, GL_SHININESS, &shine);
 }
 
+void dibujar_among() {
+    
+    glTranslatef(-6, 0, 0);
+        glTranslatef(f.px, f.py, f.pz);
+        glRotatef(f.rx, 1, 0, 0);
+        glRotatef(f.ry, 0, 1, 0);
+        glRotatef(f.rz, 0, 0, 1);
+        glScalef(f.sx, f.sy, f.sz);
+        among.dibujar();
+    
+}
 void dibujar_paredes_pasillo1(){
     glPushMatrix();
         glScalef(.2,.2,.2);
@@ -75,6 +107,7 @@ void dibujar_pisos_pasillo1(){
         pisodepasillo12.dibujar();
         pisodepasillounion.dibujar();
         pisodepasillounion2.dibujar();
+        dibujar_among();
     glPopMatrix();
 }
 void dibujar_pisos_pasillo2(){
