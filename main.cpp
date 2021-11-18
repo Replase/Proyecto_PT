@@ -171,10 +171,13 @@ void teclado (unsigned char key, int x, int y) {
 }
 
 void redimensionar (int ancho, int alto) {
-    if (alto == 0) alto = 1;
-    int lado = ancho < alto ? ancho : alto;
-    glViewport((ancho - lado) / 2, (alto - lado) / 2, lado, lado);
-    config_camara();
+    glViewport(0,0,ancho,alto); // Reajusta el tamaño del objeto con forme se avanza
+    glMatrixMode(GL_PROJECTION); // Matriz de proyección, no afecta el objeto
+    glLoadIdentity(); // Para eliminar los valores de la matriz que ya tenpia guardada.
+    gluPerspective(60.0, (double)ancho / (double)alto, 0.1, 30.0);
+    glMatrixMode(GL_MODELVIEW); // Matriz que modela el objeto.
+    glLoadIdentity(); // Para eliminar los valores de la matriz que ya tenpia guardada.
+
 }
 void luz_direccionalz1(void) {
     //Valores de las componentes ambiental, difusa, especular y la posición.
@@ -270,9 +273,9 @@ void luces() {
 }
 void config_GLUT(void) {
     glutInitDisplayMode (GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
-    glutInitWindowPosition(100, 100);
-    glutInitWindowSize(800, 600);
+    glutInitWindowPosition(0, 0);
     glutCreateWindow("Proyecto");
+    glutFullScreen();
     glutDisplayFunc(dibujar);
     glutKeyboardFunc(teclado);
     glutReshapeFunc(redimensionar);
