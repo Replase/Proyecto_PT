@@ -60,7 +60,8 @@ ModeloOBJ segundopiso("modelos/SegPisp/Segundopiso.obj","texturas/beige_wall_001
 ModeloOBJ adorno("modelos/Pisos/Adorno.obj");
 
 //Animacion
-ModeloOBJ among("./modelos/Animaciones/among.obj");
+//ModeloOBJ among("./modelos/Animaciones/among.obj");
+ModeloOBJ among("./modelos2/Among2.obj","texturas/amongusTextura.jpg");
 
 void aplicar_material_chrome(){
     //Definición de las componentes ambiental, difusa, especular y brillo.
