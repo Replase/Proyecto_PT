@@ -8,7 +8,8 @@
 //Se cargan los modelos.
 //muebles  
 ModeloOBJ mesa("modelos2/mesita.obj","texturas/madera.jpg");
-
+ModeloOBJ escritorio("modelos2/escritorio.obj","texturas/madera0.jpg");
+ModeloOBJ telefono("modelos2/telefono.obj","texturas/gris2.jpg");
 //Las texturas deben tener ina resolucion cuadrada mxm
 //Pisos
 //ModeloOBJ pisodepasillo11("modelos/Pisos/Piso11.obj","texturas/wood_table_001_diff_4k.jpg");
@@ -59,11 +60,23 @@ void dibujar_muebles(){
     
         
     glPushMatrix();
-        glTranslated(0.45,0.12,-1.1);
+        glTranslated(0.455,0.02,-1.1);
         glScalef(.0002,.0004,.0004);
-        
-        //glRotatef(180,0,1,0);
         mesa.dibujar();
+    glPopMatrix();
+
+
+    glPushMatrix();
+        glTranslated(3.17,0.0,-4.5);
+        glRotatef(90,0,1,0);
+        glScalef(.0455,.025,.027);
+        escritorio.dibujar();
+    glPopMatrix();
+    glPushMatrix();
+        glTranslated(2.99,0.245,-4.55);
+        glRotatef(-90,0,1,0);
+        glScalef(.03,.030,.030);
+        telefono.dibujar();
     glPopMatrix();
 }
 
