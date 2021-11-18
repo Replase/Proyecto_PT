@@ -119,6 +119,7 @@ void dibujar() {
         dibujar_techo_segundo_piso();
         dibujar_adorno();
         //dibujar_among();
+        dibujar_muebles();
     glPopMatrix();
 
     glutSwapBuffers();
