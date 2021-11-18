@@ -9,6 +9,9 @@
 #define VELOCIDAD_MOV .1 //vel de movimiento
 #define VELOCIDAD_MOV2 3 //rotar arriba abajo
 #define VELOCIDAD_ROT 0.25 //rotar derecha izquerda
+#define NUM_KF 5
+#define NUM_F 10   //fragmentos entre cada frame clave
+#define FPS 30  //miniimo de fps para ser animacion
 
 
 //Variables para interacción con el usuario.
@@ -17,6 +20,9 @@ GLfloat ty = 0;
 GLfloat tz = 0;
 GLfloat rx = 0;
 GLfloat ry = 0;
+GLfloat rz = 0;
+GLfloat esc = 1;
+
 //Creación del objeto de cámara.
 Camara cam (0,.5,2,    //Cámara posicionada en el centro.
             0,.5,-1,    //Cámara viendo hacia el fondo de la pantalla (-Z)
@@ -31,11 +37,50 @@ GLfloat rotX = 0.0f;
 GLfloat es = 1;
 GLboolean proy_orto = GL_FALSE;
 GLboolean somb_plano = GL_FALSE;
+GLboolean reproduciendo = GL_TRUE;
 
 
-//ModeloOBJ mundo("./modelos/esfera.obj", "./texturas/mundo_2k_volteado.jpg");
+frame kf[NUM_KF]={{0,0,0,  0,0,0,  1,1,1},
+                {-5,0,0,     0,0,0, 1,1,1},
+                {-10,0,0,     0,0,0,  1,1,1},
+                {-5,0,0,    0,0,0,  1,1,1},
+                {0,0,0,    0,0,0,  1,1,1}};
+int i_kf = 0;
+int i_f = 0;
 
 //Se dibujan los modelos, con sus transformaciones correspondientes.
+//animacion
+void animacion(int value){
+    if(reproduciendo){
+        if(i_kf == 0 && i_f == 0){
+            f = kf[0];
+        }else{
+            f.px += (kf[i_kf+1].px-kf[i_kf].px)/NUM_F;
+            f.py += (kf[i_kf+1].py-kf[i_kf].py)/NUM_F;
+            f.pz += (kf[i_kf+1].pz-kf[i_kf].pz)/NUM_F;
+
+            f.rx += (kf[i_kf+1].rx-kf[i_kf].rx)/NUM_F;
+            f.ry += (kf[i_kf+1].ry-kf[i_kf].ry)/NUM_F;
+            f.rz += (kf[i_kf+1].rz-kf[i_kf].rz)/NUM_F;
+
+            f.sx += (kf[i_kf+1].sx-kf[i_kf].sx)/NUM_F;
+            f.sy += (kf[i_kf+1].sy-kf[i_kf].sy)/NUM_F;
+            f.sz += (kf[i_kf+1].sz-kf[i_kf].sz)/NUM_F;
+        }
+        i_f ++;
+        if(i_f >= NUM_F){
+            i_kf ++;
+            i_f = 0;
+            if(i_kf >= NUM_KF-1){
+                i_kf = 0;
+                i_f = 0;
+            }
+        }
+        glutPostRedisplay();
+    }
+    glutTimerFunc(1000/FPS,animacion,0);
+
+}
 
 //Dibujo de un plano con textura.
 
@@ -62,6 +107,7 @@ void dibujar() {
         gluLookAt(cam.mPos.x,  cam.mPos.y,  cam.mPos.z,
                 cam.mView.x, cam.mView.y, cam.mView.z,
                 cam.mUp.x,   cam.mUp.y,   cam.mUp.z);
+        //dibujar_among();
         dibujar_paredes_pasillo1();
         dibujar_paredes_pasillo2();
         dibujar_pisos_pasillo1();
@@ -72,12 +118,12 @@ void dibujar() {
         dibujar_segundo_piso();
         dibujar_techo_segundo_piso();
         dibujar_adorno();
-        dibujar_muebles();
-        
+        //dibujar_among();
     glPopMatrix();
 
     glutSwapBuffers();
 }
+
 void config_camara (void) {            
     float ancho = GLUT_WINDOW_WIDTH;
     float alto = GLUT_WINDOW_HEIGHT;
@@ -90,6 +136,19 @@ void config_camara (void) {
 
 void teclado (unsigned char key, int x, int y) {
         switch (key) {
+        //ANIMACION
+        case 'P': case 'p':
+            reproduciendo = !reproduciendo;
+            break;
+        case 'R': case 'r':
+            i_kf =0;
+            i_f =0;
+            break;
+	//SOMBREADO
+	case ' ':
+            somb_plano = !somb_plano;
+            somb_plano ? glShadeModel(GL_FLAT) : glShadeModel(GL_SMOOTH);
+            break;
             //TRASLACIÓN
         case 'W': case 'w': cam.desplazarZ(VELOCIDAD_MOV); break;
         case 'S': case 's': cam.desplazarZ(-VELOCIDAD_MOV); break;
@@ -102,6 +161,7 @@ void teclado (unsigned char key, int x, int y) {
         case 'K': case 'k': rotX += VELOCIDAD_MOV2; break;
         case 'J': case 'j': cam.rotarY(-VELOCIDAD_ROT); break;
         case 'L': case 'l': cam.rotarY(VELOCIDAD_ROT); break;
+
         case 27:
             exit(0);
             break;
@@ -224,6 +284,7 @@ void config_OGL(void) {
     glEnable(GL_NORMALIZE);
     glEnable(GL_TEXTURE_2D);
     config_camara();
+    animacion(0);
 }
 
 int main(int argc, char** argv) {
