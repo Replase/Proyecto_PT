@@ -45,8 +45,17 @@ frame kf[NUM_KF]={{0,0,0,  0,0,0,  1,1,1},
                 {-10,0,0,     0,0,0,  1,1,1},
                 {-5,0,0,    0,0,0,  1,1,1},
                 {0,0,0,    0,0,0,  1,1,1}};
+frame kf2[NUM_KF+2]={{0,0,0,  0,0,0,  1,1,1},
+                {10,0,0,     0,0,0, 1,1,1},
+                {20,0,0,     0,0,0,  1,1,1},
+                {20,0,0,     0,180,0,  1,1,1},
+                {10,0,0,    0,180,0,  1,1,1},
+                {0,0,0,    0,180,0,  1,1,1},
+                {0,0,0,    0,0,0,  1,1,1}};
 int i_kf = 0;
 int i_f = 0;
+int i_kf2 = 0;
+int i_f2 = 0;
 
 //Se dibujan los modelos, con sus transformaciones correspondientes.
 //animacion
@@ -77,6 +86,30 @@ void animacion(int value){
             }
         }
         glutPostRedisplay();
+    }
+    if(i_kf2 == 0 && i_f2 == 0){
+        f2 = kf2[0];
+    }else{
+        f2.px += (kf2[i_kf2+1].px-kf2[i_kf2].px)/NUM_F;
+        f2.py += (kf2[i_kf2+1].py-kf2[i_kf2].py)/NUM_F;
+        f2.pz += (kf2[i_kf2+1].pz-kf2[i_kf2].pz)/NUM_F;
+
+        f2.rx += (kf2[i_kf2+1].rx-kf2[i_kf2].rx)/NUM_F;
+        f2.ry += (kf2[i_kf2+1].ry-kf2[i_kf2].ry)/NUM_F;
+        f2.rz += (kf2[i_kf2+1].rz-kf2[i_kf2].rz)/NUM_F;
+
+        f2.sx += (kf2[i_kf2+1].sx-kf2[i_kf2].sx)/NUM_F;
+        f2.sy += (kf2[i_kf2+1].sy-kf2[i_kf2].sy)/NUM_F;
+        f2.sz += (kf2[i_kf2+1].sz-kf2[i_kf2].sz)/NUM_F;
+    }
+    i_f2 ++;
+    if(i_f2 >= NUM_F){
+        i_kf2 ++;
+        i_f2 = 0;
+        if(i_kf2 >= NUM_KF-1){
+            i_kf2 = 0;
+            i_f2 = 0;
+        }
     }
     glutTimerFunc(1000/FPS,animacion,0);
 
@@ -119,8 +152,8 @@ void dibujar() {
         dibujar_techo_segundo_piso();
         dibujar_adorno();
         //dibujar_among();
+        dibujar_vocho();
     glPopMatrix();
-
     glutSwapBuffers();
 }
 

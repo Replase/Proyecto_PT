@@ -28,7 +28,7 @@ typedef struct Frame{
     float sz;
 }frame;
 
-frame f;
+frame f,f2;
 ModeloOBJ pisodepasillo11("modelos2/piso1.obj","texturas/piso1.jpg");
 
 ModeloOBJ pisodepasillo12("modelos/Pisos/Piso12.obj","texturas/wood_table_001_diff_4k.jpg");
@@ -61,6 +61,7 @@ ModeloOBJ adorno("modelos/Pisos/Adorno.obj");
 
 //Animacion
 ModeloOBJ among("./modelos/Animaciones/among.obj");
+ModeloOBJ vocho("modelos/Animaciones/vocho.obj","texturas/vocho.png");
 
 void aplicar_material_chrome(){
     //Definición de las componentes ambiental, difusa, especular y brillo.
@@ -75,6 +76,18 @@ void aplicar_material_chrome(){
     glMaterialfv(GL_FRONT, GL_SPECULAR, comp_esp);
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emision);
     glMaterialfv(GL_FRONT, GL_SHININESS, &shine);
+}
+void dibujar_vocho(){
+    glPushMatrix();
+        glTranslatef(3, 0, 0);
+        glScalef(.25,.25,.25);
+        glTranslatef(f2.px, f2.py, f2.pz);
+        glRotatef(f2.rx, 1, 0, 0);
+        glRotatef(f2.ry, 0, 1, 0);
+        glRotatef(f2.rz, 0, 0, 1);
+        glScalef(f2.sx, f2.sy, f2.sz);
+        vocho.dibujar();
+    glPopMatrix();
 }
 void dibujar_muebles(){
     
