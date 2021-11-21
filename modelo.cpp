@@ -8,7 +8,8 @@
 //Se cargan los modelos.
 //muebles  
 ModeloOBJ mesa("modelos2/mesita.obj","texturas/madera.jpg");
-ModeloOBJ escritorio("modelos2/escritorio.obj","texturas/madera0.jpg");
+
+ModeloOBJ escritorio2("modelos2/escritorio2.obj","texturas/madera0.jpg");
 ModeloOBJ telefono("modelos2/telefono.obj","texturas/gris2.jpg");
 //Las texturas deben tener ina resolucion cuadrada mxm
 //Pisos
@@ -61,13 +62,8 @@ ModeloOBJ segundopiso("modelos/SegPisp/Segundopiso.obj","texturas/beige_wall_001
 ModeloOBJ adorno("modelos/Pisos/Adorno.obj");
 
 //Animacion
-<<<<<<< HEAD
 ModeloOBJ among("./modelos/Animaciones/among.obj");
 ModeloOBJ vocho("modelos/Animaciones/vocho.obj","texturas/vocho.png");
-=======
-//ModeloOBJ among("./modelos/Animaciones/among.obj");
-ModeloOBJ among("./modelos2/Among2.obj","texturas/amongusTextura.jpg");
->>>>>>> d47c8b6cfda0993b96655cd732dc495052ba461d
 
 void aplicar_material_chrome(){
     //Definición de las componentes ambiental, difusa, especular y brillo.
@@ -92,7 +88,7 @@ void dibujar_vocho(){
         glRotatef(f2.ry, 0, 1, 0);
         glRotatef(f2.rz, 0, 0, 1);
         glScalef(f2.sx, f2.sy, f2.sz);
-        vocho.dibujar();
+        //vocho.dibujar();
     glPopMatrix();
 }
 void dibujar_muebles(){
@@ -105,14 +101,17 @@ void dibujar_muebles(){
     glPopMatrix();
 
 
+   
+
+
     glPushMatrix();
-        glTranslated(3.17,0.0,-4.5);
-        glRotatef(90,0,1,0);
-        glScalef(.0455,.025,.027);
-        escritorio.dibujar();
+        glTranslated(3.05,-0.025,-4.6);
+        glRotatef(-90,0,1,0);
+        glScalef(.028,.025,.0435);
+        escritorio2.dibujar();
     glPopMatrix();
     glPushMatrix();
-        glTranslated(2.99,0.245,-4.55);
+        glTranslated(2.99,0.240,-4.55);
         glRotatef(-90,0,1,0);
         glScalef(.03,.030,.030);
         telefono.dibujar();
@@ -127,7 +126,7 @@ void dibujar_among() {
         glRotatef(f.ry, 0, 1, 0);
         glRotatef(f.rz, 0, 0, 1);
         glScalef(f.sx, f.sy, f.sz);
-        among.dibujar();
+        //among.dibujar();
     
 }
 void dibujar_paredes_pasillo1(){

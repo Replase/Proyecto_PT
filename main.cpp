@@ -152,11 +152,8 @@ void dibujar() {
         dibujar_techo_segundo_piso();
         dibujar_adorno();
         //dibujar_among();
-<<<<<<< HEAD
         dibujar_vocho();
-=======
         dibujar_muebles();
->>>>>>> d47c8b6cfda0993b96655cd732dc495052ba461d
     glPopMatrix();
     glutSwapBuffers();
 }
