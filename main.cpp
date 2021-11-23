@@ -1,347 +1,442 @@
-#include <GL/glut.h>
+#include "cargadorOBJ.cpp"
 #include <stdlib.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include "camara.cpp"
-#include "modelo.cpp"
+//#include <GL/gl.h>
+//#include <GL/glu.h>
+//#include <GL/glut.h>
+//#include <vector>
 #define STB_IMAGE_IMPLEMENTATION
-#define VELOCIDAD_MOV .1 //vel de movimiento
-#define VELOCIDAD_MOV2 3 //rotar arriba abajo
-#define VELOCIDAD_ROT 0.25 //rotar derecha izquerda
-#define NUM_KF 5
-#define NUM_F 10   //fragmentos entre cada frame clave
-#define FPS 30  //miniimo de fps para ser animacion
+//Se cargan los modelos.
+//muebles  
+ModeloOBJ mesa("modelos2/mesita.obj","texturas/madera.jpg");
+
+ModeloOBJ escritorio2("modelos2/escritorio2.obj","texturas/madera0.jpg");
+ModeloOBJ telefono("modelos2/telefono.obj","texturas/gris2.jpg");
+//among 2
+ModeloOBJ mochila("./modelos2/mochila.obj", "./texturas/militar.jpg");
+ModeloOBJ torso("./modelos2/torso.obj");
+ModeloOBJ visor("./modelos2/visor.obj");
+
+//Las texturas deben tener ina resolucion cuadrada mxm
+//Pisos
+//ModeloOBJ pisodepasillo11("modelos/Pisos/Piso11.obj","texturas/wood_table_001_diff_4k.jpg");
+
+typedef struct Frame{
+    //traslacion
+    float px;
+    float py;
+    float pz;
+    //rotacion
+    float rx;
+    float ry;
+    float rz;
+    //escala
+    float sx;
+    float sy;
+    float sz;
+}frame;
+
+frame f,f2;
+ModeloOBJ pisodepasillo11("modelos2/piso1.obj","texturas/piso1.jpg");
+ModeloOBJ cuarto("modelos/cuarto.obj","texturas/gris1.jpg");
+ModeloOBJ cuartop("modelos/pisocuert.obj","texturas/black.jpg");
+ModeloOBJ muroa("modelos/muro.obj","texturas/pared2.jpg");
+ModeloOBJ pisodepasillo12("modelos/Pisos/Piso12.obj","texturas/wood_table_001_diff_4k.jpg");
+ModeloOBJ pisodepasillo21("modelos/Pisos/Piso21.obj","texturas/wood_table_001_diff_4k.jpg");
+ModeloOBJ pisodepasillo22("modelos/Pisos/Piso22.obj","texturas/wood_table_001_diff_4k.jpg");
+ModeloOBJ pisodepasillo23("modelos/Pisos/Piso23.obj","texturas/wood_table_001_diff_4k.jpg");
+ModeloOBJ pisodepasillounion("modelos/Pisos/PisoUnion.obj","texturas/wood_table_001_diff_4k.jpg");
+ModeloOBJ pisodepasillounion2("modelos/Pisos/Pisounion2.obj","texturas/wood_table_001_diff_4k.jpg");
+ModeloOBJ silla("modelos/GreenChair_01_4k.obj","texturas/GreenChair_01_diff_4k.jpg");
+//Paredes 
+//ModeloOBJ paredespasillo1("modelos/Paredes/Paredes1.obj","texturas/beige_wall_001_diff_4k.jpg");
+ModeloOBJ paredespasillo1("modelos2/paredes1.obj","texturas/pared1.jpg");//uwu
+//ModeloOBJ paredespasillo2("modelos/Paredes/Paredes2.obj","texturas/beige_wall_001_diff_4k.jpg");
+ModeloOBJ paredespasillo2("modelos2/paredes2.obj","texturas/pared2.jpg");
+
+//Muros
+//ModeloOBJ murospasillo2("modelos/Muros/Muros.obj","texturas/beige_wall_001_diff_4k.jpg");
+ModeloOBJ murospasillo2("modelos2/muros.obj","texturas/muros1.jpg");
+
+//Techos
+//ModeloOBJ techospasillo1("modelos/Techos/Techos1.obj","texturas/beige_wall_001_diff_4k.jpg");
+ModeloOBJ techospasillo1("modelos2/techo1.obj","texturas/techo1.jpg");
 
 
-//Variables para interacción con el usuario.
-GLfloat tx = 0;
-GLfloat ty = 0;
-GLfloat tz = 0;
-GLfloat rx = 0;
-GLfloat ry = 0;
-GLfloat rz = 0;
-GLfloat esc = 1;
+ModeloOBJ techospasillo2("modelos/Techos/Techos2.obj","texturas/texture2.jpg");
+ModeloOBJ techosegundopiso("modelos/Techos/Techos3.obj","texturas/texture3.jpg");
+//segundo piso
+ModeloOBJ segundopiso("modelos/p2.obj","texturas/fs.jpg");
+//Adorno
+ModeloOBJ adorno("modelos/Pisos/Adorno.obj");
 
-//Creación del objeto de cámara.
-Camara cam (0,.5,2,    //Cámara posicionada en el centro.
-            0,.5,-1,    //Cámara viendo hacia el fondo de la pantalla (-Z)
-            0, 1, 0);   //Cámara sin rotación (UP = +Y)
-//Rotación de la cámara sobre su eje X local (voltear arriba y abajo.)
-GLfloat rotX = 0.0f;
+//Photos
+ModeloOBJ frame1_1("modelos2/plano.obj", "texturas/frame1.jpg");
+//"frame1.jpg"
+ModeloOBJ frame2_1("modelos2/plano.obj", "texturas/frame2.jpg");
+//"frame2.jpg"
+ModeloOBJ wood_frame("modelos2/cubo.obj", "texturas/wood_frame.JPG");
+//"wood_frame.JPG"
+ModeloOBJ photo1("modelos2/plano.obj", "texturas/photo1.jpg");
+ModeloOBJ photo2("modelos2/plano.obj", "texturas/photo2.jpg");
+ModeloOBJ photo3("modelos2/plano.obj", "texturas/forest1.jpg");
+ModeloOBJ photo4("modelos2/plano.obj", "texturas/forest2.jpg");
+ModeloOBJ photo5("modelos2/plano.obj", "forestjfif.jfif");
+//"photo1.jpg"
+//"photo2.jpg"
+//"forest1.jpg"
+//"forest2.jpg"
+//"forestjfif.jfif"
 
-//GLfloat rz = -20;
-//GLfloat bx = 0;
-//GLfloat by= 1;
 
-GLfloat es = 1;
-GLboolean proy_orto = GL_FALSE;
-GLboolean somb_plano = GL_FALSE;
-GLboolean reproduciendo = GL_TRUE;
-
-
-frame kf[NUM_KF]={{0,0,0,  0,0,0,  1,1,1},
-                {-5,0,0,     0,0,0, 1,1,1},
-                {-10,0,0,     0,0,0,  1,1,1},
-                {-5,0,0,    0,0,0,  1,1,1},
-                {0,0,0,    0,0,0,  1,1,1}};
-frame kf2[NUM_KF+2]={{0,0,0,  0,0,0,  1,1,1},
-                {10,0,0,     0,0,0, 1,1,1},
-                {20,0,0,     0,0,0,  1,1,1},
-                {20,0,0,     0,180,0,  1,1,1},
-                {10,0,0,    0,180,0,  1,1,1},
-                {0,0,0,    0,180,0,  1,1,1},
-                {0,0,0,    0,0,0,  1,1,1}};
-int i_kf = 0;
-int i_f = 0;
-int i_kf2 = 0;
-int i_f2 = 0;
-
-//Se dibujan los modelos, con sus transformaciones correspondientes.
-//animacion
-void animacion(int value){
-    if(reproduciendo){
-        if(i_kf == 0 && i_f == 0){
-            f = kf[0];
-        }else{
-            f.px += (kf[i_kf+1].px-kf[i_kf].px)/NUM_F;
-            f.py += (kf[i_kf+1].py-kf[i_kf].py)/NUM_F;
-            f.pz += (kf[i_kf+1].pz-kf[i_kf].pz)/NUM_F;
-
-            f.rx += (kf[i_kf+1].rx-kf[i_kf].rx)/NUM_F;
-            f.ry += (kf[i_kf+1].ry-kf[i_kf].ry)/NUM_F;
-            f.rz += (kf[i_kf+1].rz-kf[i_kf].rz)/NUM_F;
-
-            f.sx += (kf[i_kf+1].sx-kf[i_kf].sx)/NUM_F;
-            f.sy += (kf[i_kf+1].sy-kf[i_kf].sy)/NUM_F;
-            f.sz += (kf[i_kf+1].sz-kf[i_kf].sz)/NUM_F;
-        }
-        i_f ++;
-        if(i_f >= NUM_F){
-            i_kf ++;
-            i_f = 0;
-            if(i_kf >= NUM_KF-1){
-                i_kf = 0;
-                i_f = 0;
-            }
-        }
-        glutPostRedisplay();
-    }
-    if(i_kf2 == 0 && i_f2 == 0){
-        f2 = kf2[0];
-    }else{
-        f2.px += (kf2[i_kf2+1].px-kf2[i_kf2].px)/NUM_F;
-        f2.py += (kf2[i_kf2+1].py-kf2[i_kf2].py)/NUM_F;
-        f2.pz += (kf2[i_kf2+1].pz-kf2[i_kf2].pz)/NUM_F;
-
-        f2.rx += (kf2[i_kf2+1].rx-kf2[i_kf2].rx)/NUM_F;
-        f2.ry += (kf2[i_kf2+1].ry-kf2[i_kf2].ry)/NUM_F;
-        f2.rz += (kf2[i_kf2+1].rz-kf2[i_kf2].rz)/NUM_F;
-
-        f2.sx += (kf2[i_kf2+1].sx-kf2[i_kf2].sx)/NUM_F;
-        f2.sy += (kf2[i_kf2+1].sy-kf2[i_kf2].sy)/NUM_F;
-        f2.sz += (kf2[i_kf2+1].sz-kf2[i_kf2].sz)/NUM_F;
-    }
-    i_f2 ++;
-    if(i_f2 >= NUM_F){
-        i_kf2 ++;
-        i_f2 = 0;
-        if(i_kf2 >= NUM_KF-1){
-            i_kf2 = 0;
-            i_f2 = 0;
-        }
-    }
-    glutTimerFunc(1000/FPS,animacion,0);
-
-}
-
-//Dibujo de un plano con textura.
-
-void ejes(void){
-    glBegin(GL_LINES);
-    
-        glVertex3f(-10,0,0);
-        glVertex3f(10,0,0);
-
-        glVertex3f(0,-10,0);
-        glVertex3f(0,10,0);
-
-        glVertex3f(0,0,-10);
-        glVertex3f(0,0,10);
-    glEnd();
-}
-
-void dibujar() {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
-    glPushMatrix();
-        ejes();
-        glRotatef(rotX, 1.0f, 0.0f, 0.0f);
-        gluLookAt(cam.mPos.x,  cam.mPos.y,  cam.mPos.z,
-                cam.mView.x, cam.mView.y, cam.mView.z,
-                cam.mUp.x,   cam.mUp.y,   cam.mUp.z);
-        //dibujar_among();
-        dibujar_paredes_pasillo1();
-        dibujar_paredes_pasillo2();
-        dibujar_pisos_pasillo1();
-        dibujar_pisos_pasillo2();
-        dibujar_muros_pasillo2();
-        dibujar_techos_pasillo1();
-        dibujar_techos_pasillo2();
-        dibujar_segundo_piso();
-        dibujar_techo_segundo_piso();
-        dibujar_adorno();
-        //dibujar_among();
-        dibujar_cuarto();
-        dibujar_muebles();
-        dibujar_among_mochila();
-	       
-	//dibujar fotos
-	dibujar_frame1_1();
-        //dibujar_frame1_2();
-        //dibujar_frame1_3();
-        //dibujar_frame1_4();
-        //dibujar_frame1_5();
-
-        //dibujar_frame2_1();
-        //dibujar_frame2_2();
-        //dibujar_frame2_3();
-        //dibujar_frame2_4();
-        //dibujar_frame2_5();
-	
-    glPopMatrix();
-    glutSwapBuffers();
-}
-
-void config_camara (void) {            
-    float ancho = GLUT_WINDOW_WIDTH;
-    float alto = GLUT_WINDOW_HEIGHT;
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(45, ancho/alto, 0.1, 1000);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-}
-
-void teclado (unsigned char key, int x, int y) {
-        switch (key) {
-        //ANIMACION
-        case 'P': case 'p':
-            reproduciendo = !reproduciendo;
-            break;
-        case 'R': case 'r':
-            i_kf =0;
-            i_f =0;
-            break;
-	//SOMBREADO
-	case ' ':
-            somb_plano = !somb_plano;
-            somb_plano ? glShadeModel(GL_FLAT) : glShadeModel(GL_SMOOTH);
-            break;
-            //TRASLACIÓN
-        case 'W': case 'w': cam.desplazarZ(VELOCIDAD_MOV); break;
-        case 'S': case 's': cam.desplazarZ(-VELOCIDAD_MOV); break;
-        case 'A': case 'a': cam.desplazarX(-VELOCIDAD_MOV); break;
-        case 'D': case 'd': cam.desplazarX(VELOCIDAD_MOV); break;
-        case '+': cam.desplazarY(VELOCIDAD_MOV); break;
-        case '-': cam.desplazarY(-VELOCIDAD_MOV); break;
-        //ROTACIÓN
-        case 'I': case 'i': rotX -= VELOCIDAD_MOV2; break;
-        case 'K': case 'k': rotX += VELOCIDAD_MOV2; break;
-        case 'J': case 'j': cam.rotarY(-VELOCIDAD_ROT); break;
-        case 'L': case 'l': cam.rotarY(VELOCIDAD_ROT); break;
-
-        case 27:
-            exit(0);
-            break;
-    }
-    glutPostRedisplay();
-}
-
-void redimensionar (int ancho, int alto) {
-    glViewport(0,0,ancho,alto); // Reajusta el tamaño del objeto con forme se avanza
-    glMatrixMode(GL_PROJECTION); // Matriz de proyección, no afecta el objeto
-    glLoadIdentity(); // Para eliminar los valores de la matriz que ya tenpia guardada.
-    gluPerspective(60.0, (double)ancho / (double)alto, 0.1, 30.0);
-    glMatrixMode(GL_MODELVIEW); // Matriz que modela el objeto.
-    glLoadIdentity(); // Para eliminar los valores de la matriz que ya tenpia guardada.
-
-}
-void luz_direccionalz1(void) {
-    //Valores de las componentes ambiental, difusa, especular y la posición.
-    GLfloat amb[] = {0.0, 0.0, 0.0, 1.0};
-    GLfloat dif[] = {1.0, 1.0, 1.0, 1.0};
-    GLfloat esp[] = {1.0, 1.0, 1.0, 1.0};    
-    GLfloat pos[] = {0.0, 0.0, 20.0, 0.0};    
-    //Asignación de valores de material y posición a la luz.
-    glLightfv(GL_LIGHT0, GL_AMBIENT, amb);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, dif);
-    glLightfv(GL_LIGHT0, GL_SPECULAR, esp);
-    glLightfv(GL_LIGHT0, GL_POSITION, pos);
-}
-void luz_direccionalz2(void) {
-    //Valores de las componentes ambiental, difusa, especular y la posición.
-    GLfloat amb[] = {0.0, 0.0, 0.0, 1.0};
-    GLfloat dif[] = {1.0, 1.0, 1.0, 1.0};
-    GLfloat esp[] = {1.0, 1.0, 1.0, 1.0};    
-    GLfloat pos[] = {0.0, 0.0, -20.0, 0.0};    
-    //Asignación de valores de material y posición a la luz.
-    glLightfv(GL_LIGHT1, GL_AMBIENT, amb);
-    glLightfv(GL_LIGHT1, GL_DIFFUSE, dif);
-    glLightfv(GL_LIGHT1, GL_SPECULAR, esp);
-    glLightfv(GL_LIGHT1, GL_POSITION, pos);
-}
-void luz_direccionaly1(void) {
-    //Valores de las componentes ambiental, difusa, especular y la posición.
-    GLfloat amb[] = {0.0, 0.0, 0.0, 1.0};
-    GLfloat dif[] = {1.0, 1.0, 1.0, 1.0};
-    GLfloat esp[] = {1.0, 1.0, 1.0, 1.0};    
-    GLfloat pos[] = {0.0, 20.0, 0.0, 0.0};   
-    //Asignación de valores de material y posición a la luz.
-    glLightfv(GL_LIGHT2, GL_AMBIENT, amb);
-    glLightfv(GL_LIGHT2, GL_DIFFUSE, dif);
-    glLightfv(GL_LIGHT2, GL_SPECULAR, esp);
-    glLightfv(GL_LIGHT2, GL_POSITION, pos);
-}
-void luz_direccionaly2(void) {
-    //Valores de las componentes ambiental, difusa, especular y la posición.
-    GLfloat amb[] = {0.0, 0.0, 0.0, 1.0};
-    GLfloat dif[] = {1.0, 1.0, 1.0, 1.0};
-    GLfloat esp[] = {1.0, 1.0, 1.0, 1.0};    
-    GLfloat pos[] = {0.0, -20.0, 0.0, 0.0};   
-    //Asignación de valores de material y posición a la luz.
-    glLightfv(GL_LIGHT3, GL_AMBIENT, amb);
-    glLightfv(GL_LIGHT3, GL_DIFFUSE, dif);
-    glLightfv(GL_LIGHT3, GL_SPECULAR, esp);
-    glLightfv(GL_LIGHT3, GL_POSITION, pos);
-}
-void luz_direccionalx1(void) {
-    //Valores de las componentes ambiental, difusa, especular y la posición.
-    GLfloat amb[] = {0.0, 0.0, 0.0, 1.0};
-    GLfloat dif[] = {1.0, 1.0, 1.0, 1.0};
-    GLfloat esp[] = {1.0, 1.0, 1.0, 1.0};    
-    GLfloat pos[] = {20.0, 0.0, 0.0, 0.0};   
-    //Asignación de valores de material y posición a la luz.
-    glLightfv(GL_LIGHT4, GL_AMBIENT, amb);
-    glLightfv(GL_LIGHT4, GL_DIFFUSE, dif);
-    glLightfv(GL_LIGHT4, GL_SPECULAR, esp);
-    glLightfv(GL_LIGHT4, GL_POSITION, pos);
-}
-void luz_direccionalx2(void) {
-    //Valores de las componentes ambiental, difusa, especular y la posición.
-    GLfloat amb[] = {0.0, 0.0, 0.0, 1.0};
-    GLfloat dif[] = {1.0, 1.0, 1.0, 1.0};
-    GLfloat esp[] = {1.0, 1.0, 1.0, 1.0};    
-    GLfloat pos[] = {-20.0, 0.0, 0.0, 0.0};   
-    //Asignación de valores de material y posición a la luz.
-    glLightfv(GL_LIGHT5, GL_AMBIENT, amb);
-    glLightfv(GL_LIGHT5, GL_DIFFUSE, dif);
-    glLightfv(GL_LIGHT5, GL_SPECULAR, esp);
-    glLightfv(GL_LIGHT5, GL_POSITION, pos);
-}
-void luces() {
-    //Se activa la iluminación.
-    glEnable(GL_LIGHTING);
-    //Se inicializan todas las luces.
+//Animacion
+ModeloOBJ among("modelos2/Among2.obj","texturas/amongusTextura.jpg");
+ModeloOBJ vocho("modelos/Animaciones/vocho.obj","texturas/vocho.png");
+//Materiales among 
+void color_negro_plastic(){
+    GLfloat mat_ambient[] ={0.0f, 0.0f, 0.0f, 1.0f };
+    GLfloat mat_diffuse[] ={0.01f, 0.01f, 0.01f, 1.0f };
+    GLfloat mat_specular[] ={0.50f, 0.50f, 0.50f, 1.0f };
+    GLfloat shine =32.0 ;
   
-    luz_direccionalx1();
-    luz_direccionalx2();
-    luz_direccionaly1();
-    luz_direccionaly2();
-    luz_direccionalz1();
-    luz_direccionalz2();
-    glEnable(GL_LIGHT0);
-    glEnable(GL_LIGHT1);
-    glEnable(GL_LIGHT2);
-    glEnable(GL_LIGHT3);
-    glEnable(GL_LIGHT4);
-    glEnable(GL_LIGHT5);
-    //Se activa la luz por defecto.
-
+    
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, &shine);
 }
-void config_GLUT(void) {
-    glutInitDisplayMode (GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
-    glutInitWindowPosition(0, 0);
-    glutCreateWindow("Proyecto");
-    glutFullScreen();
-    glutDisplayFunc(dibujar);
-    glutKeyboardFunc(teclado);
-    glutReshapeFunc(redimensionar);
-}
+void color_rojo(){
+    GLfloat mat_ambient[] ={ 0.0f,0.00f,0.00f,1.0f };
+    GLfloat mat_diffuse[] ={0.5f,0.0f,0.0f,1.0f };
+    GLfloat mat_specular[] ={0.07f,0.6f,0.6f,1.0f };
+    GLfloat shine =25;
+   
 
-void config_OGL(void) {
-    glClearColor(0.2, 0.2, 0.2, 1.0);
-    luces();
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_NORMALIZE);
-    glEnable(GL_TEXTURE_2D);
-    config_camara();
-    animacion(0);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, &shine);
+}
+void color_blanco(){
+    GLfloat mat_ambient[] ={ 0.87f, 0.87f, 0.87f, 1.0f };
+    GLfloat mat_diffuse[] ={0.21f, 0.21f, 0.21f, 1.0f };
+    GLfloat mat_specular[] ={0.296648f, 0.296648f, 0.296648f, 1.0f };
+    GLfloat shine =20;
+
+
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, &shine);
 }
 
-int main(int argc, char** argv) {
-    glutInit(&argc, argv);
-    config_GLUT();
-    config_OGL();
-    glutMainLoop();
-    return 0;
+
+void aplicar_material_chrome(){
+    //Definición de las componentes ambiental, difusa, especular y brillo.
+    GLfloat comp_amb[] = {0.0f, 0.2f, 0.0f, 1.0f  };
+    GLfloat comp_dif[] = {0.4f, 0.4f, 0.4f, 1.0f };
+    GLfloat comp_esp[] = {0.774597f, 0.774597f, 0.774597f, 1.0f };
+    GLfloat emision[] ={.1,.1,.1,.1};
+    GLfloat shine = 76.8f;
+    //Aplicación de las componentes ambiental, difusa, especular y brillo.
+    glMaterialfv(GL_FRONT, GL_AMBIENT, comp_amb);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, comp_dif);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, comp_esp);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emision);
+    glMaterialfv(GL_FRONT, GL_SHININESS, &shine);
 }
+void dibujar_among_mochila(){  
+    glPushMatrix();
+        glTranslated(0.5,0,1.1);
+        glRotatef(180, 0, 1, 0);
+        glScalef(.15,.15,.15);
+        mochila.dibujar();
+        color_rojo();
+        torso.dibujar();
+        color_negro_plastic();
+        visor.dibujar();
+        color_blanco();
+    glPopMatrix();
+
+   
+}
+
+
+
+void dibujar_muebles(){  
+    glPushMatrix();
+        glTranslated(0.455,0.02,-1.1);
+        glScalef(.0002,.0004,.0004);
+        mesa.dibujar();
+    glPopMatrix();
+
+    glPushMatrix();
+        glTranslated(3.05,-0.025,-4.6);
+        glRotatef(-90,0,1,0);
+        glScalef(.028,.025,.0435);
+        escritorio2.dibujar();
+    glPopMatrix();
+    glPushMatrix();
+        glTranslated(3.4,0.0,-3.4);
+        glScalef(.4,.4,.4);
+        glRotatef(-135,0,1,0);
+        silla.dibujar();
+    glPopMatrix();
+    glPushMatrix();
+        glTranslated(2.99,0.245,-4.55);
+        glRotatef(-90,0,1,0);
+        glScalef(.03,.030,.030);
+        telefono.dibujar();
+    glPopMatrix();
+}
+
+void dibujar_among() {
+    
+    glTranslatef(-6, 0, 0);
+        glTranslatef(f.px, f.py, f.pz);
+        glRotatef(f.rx, 1, 0, 0);
+        glRotatef(f.ry, 0, 1, 0);
+        glRotatef(f.rz, 0, 0, 1);
+        glScalef(f.sx, f.sy, f.sz);
+        among.dibujar();
+    
+}
+void dibujar_paredes_pasillo1(){
+    glPushMatrix();
+        glScalef(.2,.2,.2);
+        glRotatef(180,0,1,0);
+        paredespasillo1.dibujar();
+    glPopMatrix();
+}
+void dibujar_paredes_pasillo2(){
+    glPushMatrix();
+        glScalef(.2,.2,.2);
+        glRotatef(180,0,1,0);
+        paredespasillo2.dibujar();
+    glPopMatrix();
+}
+void dibujar_pisos_pasillo1(){
+    glPushMatrix();
+        glScalef(.2,.2,.2);
+        glRotatef(180,0,1,0);
+        pisodepasillo11.dibujar();
+        pisodepasillo12.dibujar();
+        pisodepasillounion.dibujar();
+        pisodepasillounion2.dibujar();
+        dibujar_among();
+    glPopMatrix();
+}
+void dibujar_pisos_pasillo2(){
+    glPushMatrix();
+        glScalef(.2,.2,.2);
+        glRotatef(180,0,1,0);
+        pisodepasillo21.dibujar();
+        pisodepasillo22.dibujar();
+        pisodepasillo23.dibujar();
+    glPopMatrix();
+}
+void dibujar_muros_pasillo2(){
+    glPushMatrix();
+        glScalef(.2,.2,.2);
+        glRotatef(180,0,1,0);
+        murospasillo2.dibujar();
+    glPopMatrix();
+}
+void dibujar_techos_pasillo1(){
+    glPushMatrix();
+        glScalef(.2,.2,.2);
+        glRotatef(180,0,1,0);
+        techospasillo1.dibujar();
+    glPopMatrix();
+}
+void dibujar_techos_pasillo2(){
+    glPushMatrix();
+        glScalef(.2,.2,.2);
+        glRotatef(180,0,1,0);
+        techospasillo2.dibujar();
+    glPopMatrix();
+}
+void dibujar_segundo_piso(){
+    glPushMatrix();
+        glScalef(.2,.2,.2);
+        glRotatef(180,0,1,0);
+        muroa.dibujar();
+        segundopiso.dibujar();
+    glPopMatrix();
+}
+void dibujar_techo_segundo_piso(){
+    glPushMatrix();
+        glScalef(.2,.2,.2);
+        glRotatef(180,0,1,0);
+        techosegundopiso.dibujar();
+    glPopMatrix();
+}
+void dibujar_cuarto(){
+    glPushMatrix();
+        glScalef(.2,.2,.2);
+        glRotatef(180,0,1,0);
+        cuarto.dibujar();
+        cuartop.dibujar();
+    glPopMatrix();
+}
+void dibujar_adorno(){
+    glPushMatrix();
+        aplicar_material_chrome();
+        glScalef(.2,.2,.2);
+        glRotatef(180,0,1,0);
+        adorno.dibujar();
+    glPopMatrix();
+}
+
+//Testing para ver si sí jala
+void dibujar_frame1_1()
+{
+    glPushMatrix();
+    glTranslatef(0,0.5,-4.4);
+    glPushMatrix();
+        glScalef(.1, .1, .025);
+        glTranslatef(0,0,8);
+        glRotatef(90, 1,0, 0);
+        wood_frame.dibujar();
+    glPopMatrix();
+
+    glPushMatrix();
+    //glScalef(1.5, 0.2, 1.5);
+    glScalef(.1, .1, .2);
+    glRotatef(90, 1,0, 0);
+
+    glTranslatef(0, 1.2, 0);
+    frame1_1.dibujar();
+    glScalef(0.7, 0.7, 0.7);
+    glTranslatef(0, 0.2, 0);
+    photo1.dibujar(); //change this
+    glPopMatrix();
+    
+    glPopMatrix();
+}
+
+void dibujar_frame1_2()
+{
+    glPushMatrix();
+    glScalef(0.8, 0.2, 0.8);
+    wood_frame.dibujar();
+
+    glTranslatef(0, 1.2, 0);
+    frame1_1.dibujar();
+    glScalef(0.7, 0.7, 0.7);
+    glTranslatef(0, 0.2, 0);
+    photo2.dibujar(); //change this
+    glPopMatrix();
+}
+
+void dibujar_frame1_3()
+{
+    glPushMatrix();
+    glScalef(1.2, 0.2, 1.3);
+    wood_frame.dibujar();
+
+    glTranslatef(0, 1.2, 0);
+    frame1_1.dibujar();
+    glScalef(0.7, 0.7, 0.7);
+    glTranslatef(0, 0.2, 0);
+    photo3.dibujar(); //change this
+    glPopMatrix();
+}
+
+void dibujar_frame1_4()
+{
+    glPushMatrix();
+    glScalef(0.9, 0.2, 1.2);
+    wood_frame.dibujar();
+
+    glTranslatef(0, 1.2, 0);
+    frame1_1.dibujar();
+    glScalef(0.7, 0.7, 0.7);
+    glTranslatef(0, 0.2, 0);
+    photo4.dibujar(); //change this
+    glPopMatrix();
+}
+
+void dibujar_frame1_5()
+{
+    glPushMatrix();
+    glScalef(1, 0.2, 1);
+    wood_frame.dibujar();
+
+    glTranslatef(0, 1.2, 0);
+    frame1_1.dibujar();
+    glScalef(0.7, 0.7, 0.7);
+    glTranslatef(0, 0.2, 0);
+    photo5.dibujar(); //change this
+    glPopMatrix();
+}
+
+void dibujar_frame2_1()
+{
+    glPushMatrix();
+    glScalef(1.1, 0.2, 0.8);
+    wood_frame.dibujar();
+
+    glTranslatef(0, 1.2, 0);
+    frame2_1.dibujar();
+    glScalef(0.7, 0.7, 0.7);
+    glTranslatef(0, 0.2, 0);
+    photo1.dibujar(); //change this
+    glPopMatrix();
+}
+
+void dibujar_frame2_2()
+{
+    glPushMatrix();
+    glScalef(1.5, 0.2, 1);
+    wood_frame.dibujar();
+
+    glTranslatef(0, 1.2, 0);
+    frame2_1.dibujar();
+    glScalef(0.7, 0.7, 0.7);
+    glTranslatef(0, 0.2, 0);
+    photo2.dibujar(); //change this
+    glPopMatrix();
+}
+
+void dibujar_frame2_3()
+{
+    glPushMatrix();
+    glScalef(1.2, 0.2, 1.2);
+    wood_frame.dibujar();
+
+    glTranslatef(0, 1.2, 0);
+    frame2_1.dibujar();
+    glScalef(0.7, 0.7, 0.7);
+    glTranslatef(0, 0.2, 0);
+    photo3.dibujar(); //change this
+    glPopMatrix();
+}
+
+void dibujar_frame2_4()
+{
+    glPushMatrix();
+    glScalef(1.1, 0.2, 1.4);
+    wood_frame.dibujar();
+
+    glTranslatef(0, 1.2, 0);
+    frame2_1.dibujar();
+    glScalef(0.7, 0.7, 0.7);
+    glTranslatef(0, 0.2, 0);
+    photo4.dibujar(); //change this
+    glPopMatrix();
+}
+
+void dibujar_frame2_5()
+{
+    glPushMatrix();
+    glScalef(0.8, 0.2, 0.9);
+    wood_frame.dibujar();
+
+    glTranslatef(0, 1.2, 0);
+    frame2_1.dibujar();
+    glScalef(0.7, 0.7, 0.7);
+    glTranslatef(0, 0.2, 0);
+    photo5.dibujar(); //change this
+    glPopMatrix();
+}
+//Fin del test
