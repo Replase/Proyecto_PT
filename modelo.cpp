@@ -65,7 +65,7 @@ ModeloOBJ segundopiso("modelos/SegPisp/Segundopiso.obj","texturas/pared2.jpg");
 ModeloOBJ adorno("modelos/Pisos/Adorno.obj");
 
 //Animacion
-ModeloOBJ among("./modelos/Animaciones/among.obj");
+ModeloOBJ among("modelos2/Among2.obj","texturas/amongusTextura.jpg");
 ModeloOBJ vocho("modelos/Animaciones/vocho.obj","texturas/vocho.png");
 
 void aplicar_material_chrome(){
@@ -117,7 +117,7 @@ void dibujar_among() {
         glRotatef(f.ry, 0, 1, 0);
         glRotatef(f.rz, 0, 0, 1);
         glScalef(f.sx, f.sy, f.sz);
-        //among.dibujar();
+        among.dibujar();
     
 }
 void dibujar_paredes_pasillo1(){
