@@ -153,7 +153,6 @@ private:
             stbi_image_free(tex);
             return;
         }
-        
         //Se obtiene el modelo de color de la textura
         if (num_comps_tex == 3) modelo_color = GL_RGB;
         else if (num_comps_tex == 4) modelo_color = GL_RGBA;
@@ -163,7 +162,6 @@ private:
             stbi_image_free(tex);
             return;
         }
-        
         //Se genera el id de la textura.
         glGenTextures(1, &id_tex);
     }

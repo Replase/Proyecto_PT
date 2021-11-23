@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include <vector>
 #include "camara.cpp"
 #include "modelo.cpp"
 #define STB_IMAGE_IMPLEMENTATION
