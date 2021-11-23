@@ -62,10 +62,10 @@ ModeloOBJ murospasillo2("modelos2/muros.obj","texturas/muros1.jpg");
 ModeloOBJ techospasillo1("modelos2/techo1.obj","texturas/techo1.jpg");
 
 
-ModeloOBJ techospasillo2("modelos/Techos/Techos2.obj","texturas/pared2.jpg");
+ModeloOBJ techospasillo2("modelos/Techos/Techos2.obj","texturas/skulls.jpg");
 ModeloOBJ techosegundopiso("modelos/Techos/Techos3.obj","texturas/pared2.jpg");
 //segundo piso
-ModeloOBJ segundopiso("modelos/SegPisp/Segundopiso.obj","texturas/pared2.jpg");
+ModeloOBJ segundopiso("modelos/p2.obj","texturas/fs.jpg");
 //Adorno
 ModeloOBJ adorno("modelos/Pisos/Adorno.obj");
 
@@ -113,7 +113,7 @@ void color_blanco(){
 
 void aplicar_material_chrome(){
     //Definición de las componentes ambiental, difusa, especular y brillo.
-    GLfloat comp_amb[] = {0.25f, 0.25f, 0.25f, 1.0f  };
+    GLfloat comp_amb[] = {0.0f, 0.2f, 0.0f, 1.0f  };
     GLfloat comp_dif[] = {0.4f, 0.4f, 0.4f, 1.0f };
     GLfloat comp_esp[] = {0.774597f, 0.774597f, 0.774597f, 1.0f };
     GLfloat emision[] ={.1,.1,.1,.1};
