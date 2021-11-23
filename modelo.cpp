@@ -291,11 +291,14 @@ void dibujar_adorno(){
 void dibujar_frame1_1()
 {
     glPushMatrix();
+    glTranslatef(0,0.5,-4.4);
+    glPushMatrix();
         glScalef(.1, .1, .025);
         glTranslatef(0,0,8);
         glRotatef(90, 1,0, 0);
         wood_frame.dibujar();
     glPopMatrix();
+
     glPushMatrix();
     //glScalef(1.5, 0.2, 1.5);
     glScalef(.1, .1, .2);
@@ -306,6 +309,8 @@ void dibujar_frame1_1()
     glScalef(0.7, 0.7, 0.7);
     glTranslatef(0, 0.2, 0);
     photo1.dibujar(); //change this
+    glPopMatrix();
+    
     glPopMatrix();
 }
 
