@@ -8,7 +8,8 @@
 //Se cargan los modelos.
 //muebles  
 ModeloOBJ mesa("modelos2/mesita.obj","texturas/madera.jpg");
-ModeloOBJ escritorio("modelos2/escritorio.obj","texturas/madera0.jpg");
+
+ModeloOBJ escritorio2("modelos2/escritorio2.obj","texturas/madera0.jpg");
 ModeloOBJ telefono("modelos2/telefono.obj","texturas/gris2.jpg");
 //Las texturas deben tener ina resolucion cuadrada mxm
 //Pisos
@@ -29,7 +30,7 @@ typedef struct Frame{
     float sz;
 }frame;
 
-frame f;
+frame f,f2;
 ModeloOBJ pisodepasillo11("modelos2/piso1.obj","texturas/piso1.jpg");
 ModeloOBJ cuarto("modelos/cuarto.obj","texturas/gris1.jpg");
 ModeloOBJ cuartop("modelos/pisocuert.obj","texturas/black.jpg");
@@ -64,8 +65,8 @@ ModeloOBJ segundopiso("modelos/SegPisp/Segundopiso.obj","texturas/pared2.jpg");
 ModeloOBJ adorno("modelos/Pisos/Adorno.obj");
 
 //Animacion
-//ModeloOBJ among("./modelos/Animaciones/among.obj");
-ModeloOBJ among("./modelos2/Among2.obj","texturas/amongusTextura.jpg");
+ModeloOBJ among("./modelos/Animaciones/among.obj");
+ModeloOBJ vocho("modelos/Animaciones/vocho.obj","texturas/vocho.png");
 
 void aplicar_material_chrome(){
     //Definición de las componentes ambiental, difusa, especular y brillo.
@@ -89,10 +90,10 @@ void dibujar_muebles(){
     glPopMatrix();
 
     glPushMatrix();
-        glTranslated(3.17,0.0,-4.5);
-        glRotatef(90,0,1,0);
-        glScalef(.0455,.025,.027);
-        escritorio.dibujar();
+        glTranslated(3.05,-0.025,-4.6);
+        glRotatef(-90,0,1,0);
+        glScalef(.028,.025,.0435);
+        escritorio2.dibujar();
     glPopMatrix();
     glPushMatrix();
         glTranslated(3.4,0.0,-3.4);
@@ -116,7 +117,7 @@ void dibujar_among() {
         glRotatef(f.ry, 0, 1, 0);
         glRotatef(f.rz, 0, 0, 1);
         glScalef(f.sx, f.sy, f.sz);
-        among.dibujar();
+        //among.dibujar();
     
 }
 void dibujar_paredes_pasillo1(){
