@@ -62,8 +62,8 @@ ModeloOBJ murospasillo2("modelos2/muros.obj","texturas/muros1.jpg");
 ModeloOBJ techospasillo1("modelos2/techo1.obj","texturas/techo1.jpg");
 
 
-ModeloOBJ techospasillo2("modelos/Techos/Techos2.obj","texturas/skulls.jpg");
-ModeloOBJ techosegundopiso("modelos/Techos/Techos3.obj","texturas/pared2.jpg");
+ModeloOBJ techospasillo2("modelos/Techos/Techos2.obj","texturas/texture2.jpg");
+ModeloOBJ techosegundopiso("modelos/Techos/Techos3.obj","texturas/texture3.jpg");
 //segundo piso
 ModeloOBJ segundopiso("modelos/p2.obj","texturas/fs.jpg");
 //Adorno
