@@ -69,6 +69,25 @@ ModeloOBJ segundopiso("modelos/p2.obj","texturas/fs.jpg");
 //Adorno
 ModeloOBJ adorno("modelos/Pisos/Adorno.obj");
 
+//Photos
+ModeloOBJ frame1_1("modelos2/plano.obj", "texturas/frame1.jpg");
+//"frame1.jpg"
+ModeloOBJ frame2_1("modelos2/plano.obj", "texturas/frame2.jpg");
+//"frame2.jpg"
+ModeloOBJ wood_frame("modelos2/cubo.obj", "texturas/wood_frame.JPG");
+//"wood_frame.JPG"
+ModeloOBJ photo1("modelos2/plano.obj", "texturas/photo1.jpg");
+ModeloOBJ photo2("modelos2/plano.obj", "texturas/photo2.jpg");
+ModeloOBJ photo3("modelos2/plano.obj", "texturas/forest1.jpg");
+ModeloOBJ photo4("modelos2/plano.obj", "texturas/forest2.jpg");
+ModeloOBJ photo5("modelos2/plano.obj", "forestjfif.jfif");
+//"photo1.jpg"
+//"photo2.jpg"
+//"forest1.jpg"
+//"forest2.jpg"
+//"forestjfif.jfif"
+
+
 //Animacion
 ModeloOBJ among("modelos2/Among2.obj","texturas/amongusTextura.jpg");
 ModeloOBJ vocho("modelos/Animaciones/vocho.obj","texturas/vocho.png");
@@ -268,4 +287,145 @@ void dibujar_adorno(){
     glPopMatrix();
 }
 
+//Testing para ver si sí jala
+void dibujar_frame1_1()
+{
+    glPushMatrix();
+    glScalef(1.5, 0.2, 1.5);
+    glRotatef(90, 0, 0, 0);
+    wood_frame.dibujar();
 
+    glTranslatef(0, 1.2, 0);
+    frame1_1.dibujar();
+    glScalef(0.7, 0.7, 0.7);
+    glTranslatef(0, 0.2, 0);
+    photo1.dibujar(); //change this
+    glPopMatrix();
+}
+
+void dibujar_frame1_2()
+{
+    glPushMatrix();
+    glScalef(0.8, 0.2, 0.8);
+    wood_frame.dibujar();
+
+    glTranslatef(0, 1.2, 0);
+    frame1_1.dibujar();
+    glScalef(0.7, 0.7, 0.7);
+    glTranslatef(0, 0.2, 0);
+    photo2.dibujar(); //change this
+    glPopMatrix();
+}
+
+void dibujar_frame1_3()
+{
+    glPushMatrix();
+    glScalef(1.2, 0.2, 1.3);
+    wood_frame.dibujar();
+
+    glTranslatef(0, 1.2, 0);
+    frame1_1.dibujar();
+    glScalef(0.7, 0.7, 0.7);
+    glTranslatef(0, 0.2, 0);
+    photo3.dibujar(); //change this
+    glPopMatrix();
+}
+
+void dibujar_frame1_4()
+{
+    glPushMatrix();
+    glScalef(0.9, 0.2, 1.2);
+    wood_frame.dibujar();
+
+    glTranslatef(0, 1.2, 0);
+    frame1_1.dibujar();
+    glScalef(0.7, 0.7, 0.7);
+    glTranslatef(0, 0.2, 0);
+    photo4.dibujar(); //change this
+    glPopMatrix();
+}
+
+void dibujar_frame1_5()
+{
+    glPushMatrix();
+    glScalef(1, 0.2, 1);
+    wood_frame.dibujar();
+
+    glTranslatef(0, 1.2, 0);
+    frame1_1.dibujar();
+    glScalef(0.7, 0.7, 0.7);
+    glTranslatef(0, 0.2, 0);
+    photo5.dibujar(); //change this
+    glPopMatrix();
+}
+
+void dibujar_frame2_1()
+{
+    glPushMatrix();
+    glScalef(1.1, 0.2, 0.8);
+    wood_frame.dibujar();
+
+    glTranslatef(0, 1.2, 0);
+    frame2_1.dibujar();
+    glScalef(0.7, 0.7, 0.7);
+    glTranslatef(0, 0.2, 0);
+    photo1.dibujar(); //change this
+    glPopMatrix();
+}
+
+void dibujar_frame2_2()
+{
+    glPushMatrix();
+    glScalef(1.5, 0.2, 1);
+    wood_frame.dibujar();
+
+    glTranslatef(0, 1.2, 0);
+    frame2_1.dibujar();
+    glScalef(0.7, 0.7, 0.7);
+    glTranslatef(0, 0.2, 0);
+    photo2.dibujar(); //change this
+    glPopMatrix();
+}
+
+void dibujar_frame2_3()
+{
+    glPushMatrix();
+    glScalef(1.2, 0.2, 1.2);
+    wood_frame.dibujar();
+
+    glTranslatef(0, 1.2, 0);
+    frame2_1.dibujar();
+    glScalef(0.7, 0.7, 0.7);
+    glTranslatef(0, 0.2, 0);
+    photo3.dibujar(); //change this
+    glPopMatrix();
+}
+
+void dibujar_frame2_4()
+{
+    glPushMatrix();
+    glScalef(1.1, 0.2, 1.4);
+    wood_frame.dibujar();
+
+    glTranslatef(0, 1.2, 0);
+    frame2_1.dibujar();
+    glScalef(0.7, 0.7, 0.7);
+    glTranslatef(0, 0.2, 0);
+    photo4.dibujar(); //change this
+    glPopMatrix();
+}
+
+void dibujar_frame2_5()
+{
+    glPushMatrix();
+    glScalef(0.8, 0.2, 0.9);
+    wood_frame.dibujar();
+
+    glTranslatef(0, 1.2, 0);
+    frame2_1.dibujar();
+    glScalef(0.7, 0.7, 0.7);
+    glTranslatef(0, 0.2, 0);
+    photo5.dibujar(); //change this
+    glPopMatrix();
+}
+//Fin del test
