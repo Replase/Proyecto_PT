@@ -154,6 +154,19 @@ void dibujar() {
         dibujar_cuarto();
         dibujar_muebles();
         dibujar_among_mochila();
+	       dibujar_frame1_1();
+	//dibujar fotos
+        dibujar_frame1_2();
+        dibujar_frame1_3();
+        dibujar_frame1_4();
+        dibujar_frame1_5();
+
+        dibujar_frame2_1();
+        dibujar_frame2_2();
+        dibujar_frame2_3();
+        dibujar_frame2_4();
+        dibujar_frame2_5();
+	
     glPopMatrix();
     glutSwapBuffers();
 }
