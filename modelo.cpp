@@ -1,9 +1,9 @@
 #include "cargadorOBJ.cpp"
 #include <stdlib.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
-#include <vector>
+//#include <GL/gl.h>
+//#include <GL/glu.h>
+//#include <GL/glut.h>
+//#include <vector>
 #define STB_IMAGE_IMPLEMENTATION
 //Se cargan los modelos.
 //muebles  
@@ -31,13 +31,16 @@ typedef struct Frame{
 
 frame f;
 ModeloOBJ pisodepasillo11("modelos2/piso1.obj","texturas/piso1.jpg");
-
+ModeloOBJ cuarto("modelos/cuarto.obj","texturas/gris1.jpg");
+ModeloOBJ cuartop("modelos/pisocuert.obj","texturas/black.jpg");
+ModeloOBJ muroa("modelos/muro.obj","texturas/pared2.jpg");
 ModeloOBJ pisodepasillo12("modelos/Pisos/Piso12.obj","texturas/wood_table_001_diff_4k.jpg");
 ModeloOBJ pisodepasillo21("modelos/Pisos/Piso21.obj","texturas/wood_table_001_diff_4k.jpg");
 ModeloOBJ pisodepasillo22("modelos/Pisos/Piso22.obj","texturas/wood_table_001_diff_4k.jpg");
 ModeloOBJ pisodepasillo23("modelos/Pisos/Piso23.obj","texturas/wood_table_001_diff_4k.jpg");
 ModeloOBJ pisodepasillounion("modelos/Pisos/PisoUnion.obj","texturas/wood_table_001_diff_4k.jpg");
 ModeloOBJ pisodepasillounion2("modelos/Pisos/Pisounion2.obj","texturas/wood_table_001_diff_4k.jpg");
+ModeloOBJ silla("modelos/GreenChair_01_4k.obj","texturas/GreenChair_01_diff_4k.jpg");
 //Paredes 
 //ModeloOBJ paredespasillo1("modelos/Paredes/Paredes1.obj","texturas/beige_wall_001_diff_4k.jpg");
 ModeloOBJ paredespasillo1("modelos2/paredes1.obj","texturas/pared1.jpg");//uwu
@@ -53,10 +56,10 @@ ModeloOBJ murospasillo2("modelos2/muros.obj","texturas/muros1.jpg");
 ModeloOBJ techospasillo1("modelos2/techo1.obj","texturas/techo1.jpg");
 
 
-ModeloOBJ techospasillo2("modelos/Techos/Techos2.obj","texturas/beige_wall_001_diff_4k.jpg");
-ModeloOBJ techosegundopiso("modelos/Techos/Techos3.obj","texturas/beige_wall_001_diff_4k.jpg");
+ModeloOBJ techospasillo2("modelos/Techos/Techos2.obj","texturas/pared2.jpg");
+ModeloOBJ techosegundopiso("modelos/Techos/Techos3.obj","texturas/pared2.jpg");
 //segundo piso
-ModeloOBJ segundopiso("modelos/SegPisp/Segundopiso.obj","texturas/beige_wall_001_diff_4k.jpg");
+ModeloOBJ segundopiso("modelos/SegPisp/Segundopiso.obj","texturas/pared2.jpg");
 //Adorno
 ModeloOBJ adorno("modelos/Pisos/Adorno.obj");
 
@@ -78,21 +81,24 @@ void aplicar_material_chrome(){
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emision);
     glMaterialfv(GL_FRONT, GL_SHININESS, &shine);
 }
-void dibujar_muebles(){
-    
-        
+void dibujar_muebles(){  
     glPushMatrix();
         glTranslated(0.455,0.02,-1.1);
         glScalef(.0002,.0004,.0004);
         mesa.dibujar();
     glPopMatrix();
 
-
     glPushMatrix();
         glTranslated(3.17,0.0,-4.5);
         glRotatef(90,0,1,0);
         glScalef(.0455,.025,.027);
         escritorio.dibujar();
+    glPopMatrix();
+    glPushMatrix();
+        glTranslated(3.4,0.0,-3.4);
+        glScalef(.4,.4,.4);
+        glRotatef(-135,0,1,0);
+        silla.dibujar();
     glPopMatrix();
     glPushMatrix();
         glTranslated(2.99,0.245,-4.55);
@@ -172,6 +178,7 @@ void dibujar_segundo_piso(){
     glPushMatrix();
         glScalef(.2,.2,.2);
         glRotatef(180,0,1,0);
+        muroa.dibujar();
         segundopiso.dibujar();
     glPopMatrix();
 }
@@ -182,6 +189,14 @@ void dibujar_techo_segundo_piso(){
         techosegundopiso.dibujar();
     glPopMatrix();
 }
+void dibujar_cuarto(){
+    glPushMatrix();
+        glScalef(.2,.2,.2);
+        glRotatef(180,0,1,0);
+        cuarto.dibujar();
+        cuartop.dibujar();
+    glPopMatrix();
+}
 void dibujar_adorno(){
     glPushMatrix();
         aplicar_material_chrome();
@@ -190,3 +205,5 @@ void dibujar_adorno(){
         adorno.dibujar();
     glPopMatrix();
 }
+
+

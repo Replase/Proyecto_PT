@@ -1,7 +1,7 @@
+#include <GL/glut.h>
 #include <stdlib.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include <GL/glut.h>
 #include <vector>
 #include "camara.cpp"
 #include "modelo.cpp"
@@ -119,6 +119,7 @@ void dibujar() {
         dibujar_techo_segundo_piso();
         dibujar_adorno();
         //dibujar_among();
+        dibujar_cuarto();
         dibujar_muebles();
     glPopMatrix();
 
