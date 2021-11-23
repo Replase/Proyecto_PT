@@ -113,7 +113,7 @@ void color_blanco(){
 
 void aplicar_material_chrome(){
     //Definición de las componentes ambiental, difusa, especular y brillo.
-    GLfloat comp_amb[] = {0.25f, 0.25f, 0.25f, 1.0f  };
+    GLfloat comp_amb[] = {0.0f, 0.2f, 0.0f, 1.0f  };
     GLfloat comp_dif[] = {0.4f, 0.4f, 0.4f, 1.0f };
     GLfloat comp_esp[] = {0.774597f, 0.774597f, 0.774597f, 1.0f };
     GLfloat emision[] ={.1,.1,.1,.1};
