@@ -69,6 +69,25 @@ ModeloOBJ segundopiso("modelos/p2.obj","texturas/fs.jpg");
 //Adorno
 ModeloOBJ adorno("modelos/Pisos/Adorno.obj");
 
+//Photos
+ModeloOBJ frame1_1("modelos2/plano.obj", "texturas/frame1.jpg");
+//"frame1.jpg"
+ModeloOBJ frame2_1("modelos2/plano.obj", "texturas/frame2.jpg");
+//"frame2.jpg"
+ModeloOBJ wood_frame("modelos2/cubo.obj", "texturas/wood_frame.JPG");
+//"wood_frame.JPG"
+ModeloOBJ photo1("modelos2/plano.obj", "texturas/photo1.jpg");
+ModeloOBJ photo2("modelos2/plano.obj", "texturas/photo2.jpg");
+ModeloOBJ photo3("modelos2/plano.obj", "texturas/forest1.jpg");
+ModeloOBJ photo4("modelos2/plano.obj", "texturas/forest2.jpg");
+ModeloOBJ photo5("modelos2/plano.obj", "forestjfif.jfif");
+//"photo1.jpg"
+//"photo2.jpg"
+//"forest1.jpg"
+//"forest2.jpg"
+//"forestjfif.jfif"
+
+
 //Animacion
 ModeloOBJ among("modelos2/Among2.obj","texturas/amongusTextura.jpg");
 ModeloOBJ vocho("modelos/Animaciones/vocho.obj","texturas/vocho.png");
