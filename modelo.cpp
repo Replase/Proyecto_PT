@@ -11,6 +11,11 @@ ModeloOBJ mesa("modelos2/mesita.obj","texturas/madera.jpg");
 
 ModeloOBJ escritorio2("modelos2/escritorio2.obj","texturas/madera0.jpg");
 ModeloOBJ telefono("modelos2/telefono.obj","texturas/gris2.jpg");
+//among 2
+ModeloOBJ mochila("./modelos2/mochila.obj", "./texturas/militar.jpg");
+ModeloOBJ torso("./modelos2/torso.obj");
+ModeloOBJ visor("./modelos2/visor.obj");
+
 //Las texturas deben tener ina resolucion cuadrada mxm
 //Pisos
 //ModeloOBJ pisodepasillo11("modelos/Pisos/Piso11.obj","texturas/wood_table_001_diff_4k.jpg");
@@ -67,6 +72,44 @@ ModeloOBJ adorno("modelos/Pisos/Adorno.obj");
 //Animacion
 ModeloOBJ among("modelos2/Among2.obj","texturas/amongusTextura.jpg");
 ModeloOBJ vocho("modelos/Animaciones/vocho.obj","texturas/vocho.png");
+//Materiales among 
+void color_negro_plastic(){
+    GLfloat mat_ambient[] ={0.0f, 0.0f, 0.0f, 1.0f };
+    GLfloat mat_diffuse[] ={0.01f, 0.01f, 0.01f, 1.0f };
+    GLfloat mat_specular[] ={0.50f, 0.50f, 0.50f, 1.0f };
+    GLfloat shine =32.0 ;
+  
+    
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, &shine);
+}
+void color_rojo(){
+    GLfloat mat_ambient[] ={ 0.0f,0.00f,0.00f,1.0f };
+    GLfloat mat_diffuse[] ={0.5f,0.0f,0.0f,1.0f };
+    GLfloat mat_specular[] ={0.07f,0.6f,0.6f,1.0f };
+    GLfloat shine =25;
+   
+
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, &shine);
+}
+void color_blanco(){
+    GLfloat mat_ambient[] ={ 0.87f, 0.87f, 0.87f, 1.0f };
+    GLfloat mat_diffuse[] ={0.21f, 0.21f, 0.21f, 1.0f };
+    GLfloat mat_specular[] ={0.296648f, 0.296648f, 0.296648f, 1.0f };
+    GLfloat shine =20;
+
+
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, &shine);
+}
+
 
 void aplicar_material_chrome(){
     //Definición de las componentes ambiental, difusa, especular y brillo.
@@ -82,6 +125,24 @@ void aplicar_material_chrome(){
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emision);
     glMaterialfv(GL_FRONT, GL_SHININESS, &shine);
 }
+void dibujar_among_mochila(){  
+    glPushMatrix();
+        glTranslated(0.5,0,1.1);
+        glRotatef(180, 0, 1, 0);
+        glScalef(.15,.15,.15);
+        mochila.dibujar();
+        color_rojo();
+        torso.dibujar();
+        color_negro_plastic();
+        visor.dibujar();
+        color_blanco();
+    glPopMatrix();
+
+   
+}
+
+
+
 void dibujar_muebles(){  
     glPushMatrix();
         glTranslated(0.455,0.02,-1.1);

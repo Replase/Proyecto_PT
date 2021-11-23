@@ -154,6 +154,7 @@ void dibujar() {
         //dibujar_among();
         dibujar_cuarto();
         dibujar_muebles();
+        dibujar_among_mochila();
     glPopMatrix();
     glutSwapBuffers();
 }
