@@ -200,6 +200,18 @@ void dibujar_among() {
         among.dibujar();
     
 }
+void dibujar_vocho() {
+    glPushMatrix();
+        glTranslatef(-6, 0, 0);
+        //glTranslatef(f2.px, f2.py, f2.pz);
+        //glRotatef(f2.rx, 1, 0, 0);
+        //glRotatef(f2.ry, 0, 1, 0);
+        //glRotatef(f2.rz, 0, 0, 1);
+        //glScalef(f2.sx, f2.sy, f2.sz);
+        glScalef(.01,.01,.01);
+        vocho.dibujar();
+    glPopMatrix();
+    }
 void dibujar_paredes_pasillo1(){
     glPushMatrix();
         glScalef(.2,.2,.2);

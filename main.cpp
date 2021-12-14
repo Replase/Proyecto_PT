@@ -320,9 +320,10 @@ void luces() {
 }
 void config_GLUT(void) {
     glutInitDisplayMode (GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
-    glutInitWindowPosition(0, 0);
+    glutInitWindowPosition(100, 100); /* donde inicia la ventana*/
+    glutInitWindowSize(640, 480);   
     glutCreateWindow("Proyecto");
-    glutFullScreen();
+    
     glutDisplayFunc(dibujar);
     glutKeyboardFunc(teclado);
     glutReshapeFunc(redimensionar);
